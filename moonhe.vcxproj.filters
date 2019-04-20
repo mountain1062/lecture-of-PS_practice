@@ -21,34 +21,28 @@
     <ClCompile Include="Matrix.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="re.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="step.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="change.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\PS\03.11.cpp">
+    <ClCompile Include="Linked_list.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\PS\03.14.cpp">
+    <ClCompile Include="Calculation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\PS\03_18.cpp">
+    <ClCompile Include="Bit manipulation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\PS\03_21.cpp">
+    <ClCompile Include="Bit_mani_practice.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\PS\계산하기.cpp">
+    <ClCompile Include="Dynamic Allocation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\PS\비트조작 연습문제.cpp">
+    <ClCompile Include="Step_stairs.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\PS\비트조작.cpp">
+    <ClCompile Include="Recursive.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
