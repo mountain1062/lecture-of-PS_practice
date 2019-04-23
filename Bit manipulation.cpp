@@ -11,7 +11,7 @@ unsigned char readBinary(const char * bitString) {
 	for (int i = 0; i < LEN; i++) {
 		num = num << 1;
 		num += bitString[i] - '0';
-		//if (bitString[i] == '1') num += 1; 위와 같은 문장
+		//if (bitString[i] == '1') num += 1;/// 위와 같은 문장
 	}
 	return num;
 }
@@ -47,15 +47,13 @@ unsigned char updateBit(unsigned char num, int i, bool flag) {
 	else return setBitOff(num, i);
 }
 
-unsigned char getReversedBits(unsigned char num) {
-	//bitString[0] = 0 or 1
-	unsigned num2 = 0;
-	for (int i = LEN - 1; i > 0; i--) {
-		num2 = num << 1;
-		//num2 += getBit - '0';
-		//if (bitString[i] == '1') num += 1; 위와 같은 문장
+unsigned char getReverseBits(unsigned char num) {
+	unsigned char num2 = 0;
+	for (int i = 0; i < LEN; i++) {
+		num2 = num2 << 1;
+		num2 += getBit(num, i);
 	}
-	return num;
+	return num2;
 }
 
 bool isSymmerty(unsigned num) {
@@ -87,35 +85,35 @@ int getHammingDistance(unsigned char *a, unsigned char * b) {
 }
 int main() {
 	ios::sync_with_stdio(0), cin.tie(0);
-	/*
-	문자열 형대의 2진수 읽기
-	cout << (int)readBinary("00000000") << '\n'; //0
-	cout << (int)readBinary("11111111") << '\n'; //255
+	
+	//문자열 형대의 2진수 읽기
+	//cout << (int)readBinary("00000000") << '\n'; //0
+	//cout << (int)readBinary("11111111") << '\n'; //255
 	cout << (int)readBinary("01010101") << '\n'; //85
 	cout << (int)readBinary("10000001") << '\n'; //129
-	*/
-	/*
-	비트 값 출력
-	cout << getBit(readBinary("10000001"), 7) << endl;//1
-	cout << getBit(readBinary("10000001"), 6) << endl;//0
-	printBit(readBinary("10000000")); //10000000
-	printBit(readBinary("01010101")); //01010101
-	*/
-	/*특정 위치 비트 값 조작
-	printBit(setBitOn(readBinary("00000000"), 7));
-	printBit(setBitOff(readBinary("00000000"), 7));
-	printBit(updateBit(readBinary("10000000"), 0, true));
-	*/
-	/*비트열 뒤집기
-	printBit(getReversedBits(readBinary("11010101")));
-	*/
-	/*비드열의 좌우 대칭 여부
-	cout << isSymmerty(readBinary("01011010")) << endl; // 1
-	cout << isSymmerty(readBinary("10101010")) << endl; // 0
-	*/
-	/*해밍거리*/
-	unsigned char a[BYTE], b[BYTE];
-	a[0] = readBinary("11111111"); a[1] = readBinary("10000000");
-	b[0] = readBinary("00000001"); b[1] = readBinary("00000000");
-	cout << getHammingDistance(a, b) << endl;//8
+	
+	///*
+	//비트 값 출력
+	//cout << getBit(readBinary("10000001"), 7) << endl;//1
+	//cout << getBit(readBinary("10000001"), 6) << endl;//0
+	//printBit(readBinary("10000000")); //10000000
+	//printBit(readBinary("01010101")); //01010101
+	//*/
+	///*특정 위치 비트 값 조작
+	//printBit(setBitOn(readBinary("00000000"), 7));
+	//printBit(setBitOff(readBinary("00000000"), 7));
+	//printBit(updateBit(readBinary("10000000"), 0, true));
+	//*/
+	///*비트열 뒤집기
+	//printBit(getReversedBits(readBinary("11010101")));
+	//*/
+	///*비드열의 좌우 대칭 여부
+	//cout << isSymmerty(readBinary("01011010")) << endl; // 1
+	//cout << isSymmerty(readBinary("10101010")) << endl; // 0
+	//*/
+	///*해밍거리*/
+	//unsigned char a[BYTE], b[BYTE];
+	//a[0] = readBinary("11111111"); a[1] = readBinary("10000000");
+	//b[0] = readBinary("00000001"); b[1] = readBinary("00000000");
+	//cout << getHammingDistance(a, b) << endl;//8
 }

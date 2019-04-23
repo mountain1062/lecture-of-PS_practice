@@ -45,6 +45,12 @@
     <ClCompile Include="Recursive.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Linked_list_practice.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="소스.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h">
