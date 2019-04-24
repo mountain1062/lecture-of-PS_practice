@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 int step_cnt, step_cnt_memo;
+
 int step(int n) {
 	cout << n << ' ';
 	step_cnt++;
