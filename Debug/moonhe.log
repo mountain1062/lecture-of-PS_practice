@@ -1,2 +1,7 @@
-﻿  n_queen.cpp
-  moonhe.vcxproj -> C:\Users\baek\Source\repos\lecture-of-PS_practice\Debug\moonhe.exe
+﻿  Sort.cpp
+c:\users\bds19\source\repos\lecture-of-ps_practice\sort.cpp(28): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\bds19\source\repos\lecture-of-ps_practice\sort.cpp(35): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\bds19\source\repos\lecture-of-ps_practice\sort.cpp(56): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\bds19\source\repos\lecture-of-ps_practice\sort.cpp(58): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\bds19\source\repos\lecture-of-ps_practice\sort.cpp(50): warning C4717: 'quickSort': 모든 제어 경로에서 재귀적입니다. 함수로 인해 런타임 스택 오버플로가 발생합니다.
+  moonhe.vcxproj -> C:\Users\bds19\source\repos\lecture-of-PS_practice\Debug\moonhe.exe
