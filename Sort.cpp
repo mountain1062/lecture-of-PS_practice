@@ -112,23 +112,26 @@ int binarySearch(const vector<int>& vec, int a) { //이진 탐색은 정렬된 상태에서�
 int main() {
 	int N = 20, K = 100;
 	//vector<int> vec = getRandomVector(10);//길이 10 랜덤 백터
-	vector<int> vec = getRandomVector(N,K);//파라메터(N,K)  숫자 N개 랜덤, K미만 백터
-	vector<int> vec2 = { 10,20,30,30,40,55,66,77,88,99,100 };
-	printVector(vec);
+	//vector<int> vec = getRandomVector(N,K);//파라메터(N,K)  숫자 N개 랜덤, K미만 백터
+	//vector<int> vec2 = { 10,20,30,30,40,55,66,77,88,99,100 };
+	
+	//printVector(vec);
 	//printVector(vec2);
 
 	//vector<int> sorted = insertionSort(vec);
 	//vector<int> sorted = Counting_Sort(vec,K);
 	
 	//quickSort(vec.data(),vec.size());//벡터.data??
-	radixSort(vec.data(), vec.size(), 3);//파라메터(벡터, 숫자범위, 최대자리수)	
+	//radixSort(vec.data(), vec.size(), 3);//파라메터(벡터, 숫자범위, 최대자리수)	
 	
 	
 	//int idx = binarySearch(vec2, 30);
 	//int idx2 = binary_search(vec2.begin(), vec2.end(), 30);
+	
 	//cout << "idx num : " << idx << '\n';
 	//cout << "idx2 num : " << idx2 << '\n';
+	
 	//printVector(sorted);
-	printVector(vec);
+	//printVector(vec);
 	return 0;
 }

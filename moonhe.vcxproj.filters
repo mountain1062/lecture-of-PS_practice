@@ -63,6 +63,12 @@
     <ClCompile Include="Euclidean_distance.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="K_tree_ex.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DP.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h">

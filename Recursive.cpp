@@ -38,7 +38,7 @@ int fibo(int n)
 	return fibo(n - 1) + fibo(n - 2);
 }
 
-//메모이제이션을 이용한 fibo구현 ( DP )
+//메모이제이션을 이용한 fibo구현 ( No_DP )
 void fibo_memo(int n, int *memo, int target) {
 	fibo_baek_count2++;
 	memo[0] = 0; memo[1] = 1;
