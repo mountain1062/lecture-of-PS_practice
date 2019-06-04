@@ -3,8 +3,8 @@
 #include <string.h>
 #include <algorithm>
 #include <ctime>
-#define DIM 16 //몇 차원
-#define N 1000 //점 개수
+#define DIM 3 //몇 차원
+#define N 5 //점 개수
 using namespace std;
 
 vector<double> getrandomVector(int d) {
@@ -52,7 +52,7 @@ int main() {
 	cout << idx << '\n';
 	clock_t end = clock();
 	double time = double(end - start) / CLOCKS_PER_SEC;
-	cout << time << '\n';
+	
 
 	
 }

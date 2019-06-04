@@ -1,1 +1,4 @@
-﻿  moonhe.vcxproj -> C:\Users\bds19\source\repos\lecture-of-PS_practice\Debug\moonhe.exe
+﻿  K_tree_ex.cpp
+c:\users\beak\source\repos\lecture-of-ps_practice\k_tree_ex.cpp(107): warning C4101: 'e' :참조되지 않은 지역 변수입니다.
+c:\users\beak\source\repos\lecture-of-ps_practice\k_tree_ex.cpp(107): warning C4101: 's' :참조되지 않은 지역 변수입니다.
+  moonhe.vcxproj -> C:\Users\BEAK\source\repos\lecture-of-PS_practice\Debug\moonhe.exe

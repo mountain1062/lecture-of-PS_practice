@@ -1,16 +1,18 @@
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <time.h>
-#include <vector>
+#include <ctime>
+
+#define MAX_DIM 2
+
 using namespace std;
 
-#define MAX_DIM 16
-struct kd_node_t {
+typedef struct kd_node_t {
 	double x[MAX_DIM];
 	struct kd_node_t *left, *right;
-};
+}node;
 
 inline double
 dist(struct kd_node_t *a, struct kd_node_t *b, int dim)
@@ -22,7 +24,6 @@ dist(struct kd_node_t *a, struct kd_node_t *b, int dim)
 	}
 	return d;
 }
-
 inline void swap(struct kd_node_t *x, struct kd_node_t *y) {
 	double tmp[MAX_DIM];
 	memcpy(tmp, x->x, sizeof(tmp));
@@ -32,7 +33,7 @@ inline void swap(struct kd_node_t *x, struct kd_node_t *y) {
 
 
 /* see quickselect method */
-struct kd_node_t*find_median(struct kd_node_t *start, struct kd_node_t *end, int idx)
+struct kd_node_t* find_median(struct kd_node_t *start, struct kd_node_t *end, int idx)
 {
 	if (end <= start) return NULL;
 	if (end == start + 1)
@@ -62,14 +63,11 @@ struct kd_node_t*find_median(struct kd_node_t *start, struct kd_node_t *end, int
 	}
 }
 
-struct kd_node_t*make_tree(struct kd_node_t *t, int len, int i, int dim)
-{
+struct kd_node_t* make_tree(struct kd_node_t *t, int len, int i, int dim){
 	struct kd_node_t *n;
-
 	if (!len) return 0;
-
 	if ((n = find_median(t, t + len, i))) {
-		i = (i + 1) % dim; 
+		i = (i + 1) % dim;
 		n->left = make_tree(t, n - t, i, dim);
 		n->right = make_tree(n + 1, t + len - (n + 1), i, dim);
 	}
@@ -77,20 +75,15 @@ struct kd_node_t*make_tree(struct kd_node_t *t, int len, int i, int dim)
 }
 
 /* global variable, so sue me */
-int visited; // 평균적 노드 방문 횟수
+long long visited;
 
-void nearest(struct kd_node_t *root, struct kd_node_t *nd, int i, int dim,
-	struct kd_node_t **best, double *best_dist)
-{
+void nearest(struct kd_node_t *root, struct kd_node_t *nd, int i, int dim, struct kd_node_t **best, double *best_dist){
 	double d, dx, dx2;
-
 	if (!root) return;
 	d = dist(root, nd, dim);
 	dx = root->x[i] - nd->x[i];
 	dx2 = dx * dx;
-
 	visited++;
-
 	if (!*best || d < *best_dist) {
 		*best_dist = d;
 		*best = root;
@@ -98,108 +91,52 @@ void nearest(struct kd_node_t *root, struct kd_node_t *nd, int i, int dim,
 
 	/* if chance of exact match is high */
 	if (!*best_dist) return;
-
 	if (++i >= dim) i = 0;
-
 	nearest(dx > 0 ? root->left : root->right, nd, i, dim, best, best_dist);
-	if (dx2 >= *best_dist) return;//속도 올리는 부분
+	if (dx2 >= *best_dist) return;
 	nearest(dx > 0 ? root->right : root->left, nd, i, dim, best, best_dist);
+
 }
 
-#define N 1000
+#define N 10000000
 #define rand1() (rand() / (double)RAND_MAX)
-#define rand_pt(v) { v.x[0] = rand1(); v.x[1] = rand1(); v.x[2] = rand1(); }
-
-
-vector<double> getrandomVector(int d) {
-	vector<double> vec;
-	for (int i = 0; i < d; i++) {
-		vec.push_back(rand() / (double)RAND_MAX);
-	}
-	return vec;
-}
-
-//브루트포스
-int bf_nnSearch(const vector< vector<double> >&data, const vector<double>&query) {
-	int n = N, d = MAX_DIM;
-	double best_dist = DBL_MAX; int best_idx;//현재까지 제일 가까운 거리와 인덱스 저장
-	for (int i = 0; i < n; i++) {
-		double dist = 0; //x,y,z.....거리 누적?
-		for (int j = 0; j < d; j++) {
-			//i번쨰 파란색 점의 j차원의 값, 빨간색 점의 j차원의 값
-			dist += (data[i][j] - query[j])*(data[i][j] - query[j]);
-		}
-		if (dist < best_dist) {
-			best_dist = dist;
-			best_idx = i;
-		}
-	}
-	return best_idx;
-}
-
 
 int main(void)
 {
-	//srand(unsigned(time(0)));
-	int i;
-	struct kd_node_t wp[] = {
-		{ { 2, 3 } },{ { 5, 4 } },{ { 9, 6 } },{ { 4, 7 } },{ { 8, 1 } },{ { 7, 2 } }
-	};
-	struct kd_node_t testNode = { { 9, 2 } };
-	struct kd_node_t *root, *found, *million;
+	srand(unsigned(time(0)));
+	clock_t s, e;
+	struct kd_node_t *root, *found, *data;	
+	struct kd_node_t query;//기준점
 	double best_dist;
-
-	root = make_tree(wp, sizeof(wp) / sizeof(wp[1]), 0, 2);
-
-	visited = 0;
-	found = 0;
-	nearest(root, &testNode, 0, 2, &found, &best_dist);
-
-	printf(">> WP tree\nsearching for (%g, %g)\n"
-		"found (%g, %g) dist %g\nseen %d nodes\n\n",
-		testNode.x[0], testNode.x[1],
-		found->x[0], found->x[1], sqrt(best_dist), visited);
-
-	million = (struct kd_node_t*) calloc(N, sizeof(struct kd_node_t)); //100만개 만드는 코드
-	srand(time(0));
-	for (i = 0; i < N; i++) rand_pt(million[i]);
-
-	root = make_tree(million, N, 0, 3);
-	rand_pt(testNode);
-
-	visited = 0;
-	found = 0;
-	nearest(root, &testNode, 0, 3, &found, &best_dist);
-
-	printf(">> Million tree\nsearching for (%g, %g, %g)\n"
-		"found (%g, %g, %g) dist %g\nseen %d nodes\n",
-		testNode.x[0], testNode.x[1], testNode.x[2],
-		found->x[0], found->x[1], found->x[2],
-		sqrt(best_dist), visited);
-
-	/* search many random points in million tree to see average behavior.
-	tree size vs avg nodes visited:
-	10      ~  7
-	100     ~ 16.5
-	1000        ~ 25.5
-	10000       ~ 32.8
-	100000      ~ 38.3
-	1000000     ~ 42.6
-	10000000    ~ 46.7              */
+	for (int d = 0; d < MAX_DIM; d++) query.x[d] = rand1();//기준점 랜덤 데이터 입력
+	data = (struct kd_node_t*) calloc(N, sizeof(struct kd_node_t));//N개 데이터 생성
 	
-	/*int sum = 0, test_runs = 100000;
-	for (i = 0; i < test_runs; i++) {
+	for (int i = 0; i < N; i++) {
+		for (int d = 0; d < MAX_DIM; d++) {
+			data[i].x[d] = rand1();
+		}
+	}
+
+	//트리생성
+	root = make_tree(data, N, 0, MAX_DIM);
+	int sum = 0, test_runs = 1000; // 쿼리 갯수
+	clock_t start_ = clock();
+	for (int i = 0; i < test_runs; i++) {
 		found = 0;
 		visited = 0;
-		rand_pt(testNode);
-		nearest(root, &testNode, 0, 3, &found, &best_dist);
+		for (int d = 0; d < MAX_DIM; d++) query.x[d] = rand1();//기준점 랜덤 데이터 입력
+		nearest(root, &query, 0, MAX_DIM, &found, &best_dist);
 		sum += visited;
 	}
-	printf("\n>> Million tree\n"
-		"visited %d nodes for %d random findings (%f per lookup)\n",
-		sum, test_runs, sum / (double)test_runs);
-*/
-	// free(million);
+	cout << visited << '\n';
+	clock_t end_ = clock();
+	double time_ = double(end_ - start_) / CLOCKS_PER_SEC;
+	cout << time_ << '\n';
+
+
+
+
+	//free(million);
 
 	return 0;
 }
