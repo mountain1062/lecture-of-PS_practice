@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <ctime>
 
 #define MAX_DIM 2
+#define N 1000000
+#define rand1() (rand() / (double)RAND_MAX)
 
 using namespace std;
 
@@ -98,45 +99,83 @@ void nearest(struct kd_node_t *root, struct kd_node_t *nd, int i, int dim, struc
 
 }
 
-#define N 10000000
-#define rand1() (rand() / (double)RAND_MAX)
+int bruteForce(node *data, node query) {
+	int n = N, d = MAX_DIM;
+	double best_dist = DBL_MAX; int best_idx;
+	for (int i = 0; i < n; i++) {
+		double dist = 0;
+		visited++;
+		for (int j = 0; j < d; j++) {
+			dist += (data[i].x[j] - query.x[j])*(data[i].x[j] - query.x[j]);
+		}
+		if (dist < best_dist) {
+			best_dist = dist;
+			best_idx = i;
+		}
+	}
+	return best_idx;
+}
 
-int main(void)
-{
+
+int main(void){
+	
+	printf("Â÷¿ø(DIM) : %d\n", MAX_DIM);
 	srand(unsigned(time(0)));
-	clock_t s, e;
+	clock_t start_, end_;
+	double time_;
 	struct kd_node_t *root, *found, *data;	
 	struct kd_node_t query;//±âÁØÁ¡
 	double best_dist;
 	for (int d = 0; d < MAX_DIM; d++) query.x[d] = rand1();//±âÁØÁ¡ ·£´ý µ¥ÀÌÅÍ ÀÔ·Â
-	data = (struct kd_node_t*) calloc(N, sizeof(struct kd_node_t));//N°³ µ¥ÀÌÅÍ »ý¼º
+	data = (struct kd_node_t*) calloc(N, sizeof(struct kd_node_t));//1,000,000°³ µ¥ÀÌÅÍ »ý¼º
 	
 	for (int i = 0; i < N; i++) {
 		for (int d = 0; d < MAX_DIM; d++) {
 			data[i].x[d] = rand1();
 		}
 	}
-
+	//ºê·çÆ®Æ÷½º ÀÛµ¿ Å×½ºÆ®
+	/*int idx = bruteForce(data, query);
+	cout << "query : ";
+	for (int i = 0; i < MAX_DIM; i++) {
+		cout << data[idx].x[i] << ' ';
+	}
+	cout << '\n'<< "found data : ";
+	for (int i = 0; i < MAX_DIM; i++) {
+		cout << data[idx].x[i] << ' ';
+	}*/
 	//Æ®¸®»ý¼º
 	root = make_tree(data, N, 0, MAX_DIM);
-	int sum = 0, test_runs = 1000; // Äõ¸® °¹¼ö
-	clock_t start_ = clock();
+	int test_runs = 1000; // Äõ¸® °¹¼ö
+	
+	printf("\nKD Æ®¸®\n");
+	visited = 0;
+	start_ = clock();
 	for (int i = 0; i < test_runs; i++) {
 		found = 0;
-		visited = 0;
 		for (int d = 0; d < MAX_DIM; d++) query.x[d] = rand1();//±âÁØÁ¡ ·£´ý µ¥ÀÌÅÍ ÀÔ·Â
 		nearest(root, &query, 0, MAX_DIM, &found, &best_dist);
-		sum += visited;
 	}
-	cout << visited << '\n';
-	clock_t end_ = clock();
-	double time_ = double(end_ - start_) / CLOCKS_PER_SEC;
-	cout << time_ << '\n';
+	end_ = clock();
+	time_ = double(end_ - start_) / CLOCKS_PER_SEC;
+	printf("1000°³ Äõ¸® ÃÑ Å½»ö ½Ã°£ : %f\n", time_);
+	printf("Äõ¸®´ç Æò±Õ Å½»ö ½Ã°£ : %f\n", time_ / 1000);
+	printf("Äõ¸®´ç Æò±Õ Å½»ö È½¼ö : %d\n", visited / 1000);
 
-
-
-
-	//free(million);
+	printf("\nºê·çÆ®Æ÷½º\n");
+	visited = 0;
+	start_ = clock();
+	for (int i = 0; i < test_runs; i++) {
+		for (int d = 0; d < MAX_DIM; d++) query.x[d] = rand1();//±âÁØÁ¡ ·£´ý µ¥ÀÌÅÍ ÀÔ·Â
+		bruteForce(data, query);
+	}
+	end_ = clock();
+	time_ = double(end_ - start_) / CLOCKS_PER_SEC;
+	printf("1000°³ Äõ¸® ÃÑ Å½»ö ½Ã°£ : %f\n", time_);
+	printf("Äõ¸®´ç Æò±Õ Å½»ö ½Ã°£ : %f\n", time_ / 1000);
+	printf("Äõ¸®´ç Æò±Õ Å½»ö È½¼ö : %d\n", visited / 1000);
+	
+	//free(data);
 
 	return 0;
 }
